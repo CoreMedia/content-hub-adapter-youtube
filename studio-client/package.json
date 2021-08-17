@@ -1,0 +1,8 @@
+{
+  "studioPlugins": [
+    {
+      "mainClass": "com.coremedia.labs.plugins.adapters.youtube.ContentHubStudioyoutubePlugin",
+      "name": "Content Hub"
+    }
+  ]
+}
