@@ -9,63 +9,56 @@
 ## Table of Content
 
 1. [Introduction](#introduction)
-1. [Release Download](#release-download)
-2. [Git Submodule](#git-submodule)
-3. [Activate the extension](#activate-the-extension)
-4. [Intellij IDEA Hints](#intellij-idea-hints)
+2. [Use Git](#use-git)
+3. [Download Release](#download-release)
+4. [Activate the Plugin](#activate-the-plugin)
+5. [Configure the Plugin](#configure-the-plugin)
+6. [Intellij IDEA Hints](#intellij-idea-hints)
 
 ## Introduction
 
-Depending on what you are setup and your plans, you can integrate this project in different ways.
+Depending on your setup and your plans, you can integrate this project in different ways.
 
-* If you want to use the extension in your project, then it is recommended to fork the repository and integrate it as described in [Git Submodule](#git-submodule).
-* If you do not want to use GitHub, proceed as described in [Release Download](#release-download).
-* If you just want to contribute a new feature or a bugfix to the extension, you will need to work with the [Git Submodule](#git-submodule). As an external developer you will still need a fork of the repository to create a Pull Request. 
+* If you want to use the plugin in your project, clone or fork the repository.
+* If you do not want to use GitHub, proceed as described in [Download Release](#download-release).
+* If you want to contribute a new feature or a bugfix, as an external developer, you need a fork of the repository to create a Pull Request.
 
-## Release Download
+## Use Git
 
-Go to [Release](https://github.com/CoreMedia/<PROJECT_REPO>/releases) and download the version that matches you CMCC release version.
+Clone this repository or your fork. Make sure to use the suitable branch
+for your workspace version (see [README](../README.md)). A fork is required if
+you plan to customize the plugin.
 
-From the Blueprint workspace's root folder, extract the ZIP file into `modules/extensions`.
+Continue with [Activate the plugin](#activate-the-plugin).
 
-Continue with [Activate the extension](#activate-the-extension).
+## Download Release
 
-## Git Submodule
+Go to [Release](https://github.com/CoreMedia/content-hub-adapter-youtube/releases) and download the version that matches your CMCC release version.
+The ZIP file provides the Maven workspace of the plugin.
 
-From the Blueprint workspace's root folder, clone this repository or your fork as a submodule into the extensions folder. Make sure to use the branch name that matches your workspace version. A fork is required if you plan to customize the extension.
+## Activate the Plugin
 
-```
-$ mkdir -p modules/extensions
-$ cd modules/extensions
-$ git submodule add https://github.com/<YOUR_ORGANIZATION>/<PROJECT_REPO>.git <PROJECT_REPO>
-$ git submodule init
-$ git checkout -b <your-branch-name>
-```
+The YouTube contenthub adapter is a plugin for studio-server and studio-client.
+The deployment of plugins is described [here](https://documentation.coremedia.com/cmcc-10/artifacts/2101/webhelp/coremedia-en/content/ApplicationPlugins.html).
 
-Continue with [Activate the extension](#activate-the-extension).
+In short, for a quick development roundtrip:
+1. Build your Blueprint.
+2. Build the `content-hub-adapter-youtube` plugin with `mvn clean install`.
+   Checkpoint: There should be zip files in the target directories of the `studio-client` and `studio-server` modules now.
+3. Create a directory for studio-server plugins, e.g. `/tmp/studio-server-plugins`,
+   and copy `content-hub-adapter-youtube/studio-server/target/studio-server.content-hub-adapter-youtube-<version>.zip`
+   into that directory.
+4. Start the studio server as usual, e.g. `mvn spring-boot:run`, with an additional property `-Dplugins.directory=/tmp/studio-server-plugins`
+5. Start the studio client with an additional property `-DadditionalPackagesDirs=/.../content-hub-adapter-youtube/studio-client/target/app`
 
-## Activate the Extension
+Now the plugin is running.  You won't yet notice it though, until you configure a connection
+and restart the studio server.
 
-In order to activate the extension, you need to configure the extension tool. The configuration for the tool can be found under `workspace-configuration/extensions`. Make sure that you use at least version 4.0.1 of the extension tool and that you have adjusted the `<groupId>` and `<version>` so that they match your Blueprint workspace.
+## Configure the Plugin
 
-Here you need to add the following configuration for the `extensions-maven-plugin`
-```xml
-<configuration>
-  <projectRoot>../..</projectRoot>
-  <extensionsRoot>modules/extensions</extensionsRoot>
-  <extensionPointsPath>modules/extension-config</extensionPointsPath>
-</configuration>
-```
+Once having activated the plugin as described above, you can establish the connection to the external system by adding a Settings content to the site, globally, or the user's home folder. The general Content Hub configuration is described in the [Studio Developer Manual](https://documentation.coremedia.com/cmcc-10/artifacts/2107/webhelp/studio-developer-en/content/Content_HubAdapterConfiguration.html). Additional adapter-specific configuration is shown in the screenshot below:
 
-After adapting the configuration run the extension tool in
-`workspace-configuration/extensions` by executing:
-
-```bash
-$ mvn extensions:sync
-$ mvn extensions:sync -Denable=<PROJECT_MVN_MODULE_NAME>
-``` 
-
-This will activate the extension. The extension tool will also set the relative path for the parents of the extension modules.
+![Image1: Adapter-specific configuration](images/configuration-youtube.png)
 
 ## Intellij IDEA Hints
 

@@ -1,22 +1,9 @@
 Changelog
 ================================================================================
 
-X.Y.Z
+1.0.0
 --------------------------------------------------------------------------------
-
-### Main Changes
-
-* ....
-
-### Bug Fixes
-
-* Fixed #1
-* ...
-
-### Other Changes
-
-* ...
 
 ### General Notes
 
-* ...
+* Intial release of the plugin for CMCC 11.2110.1 including all features known from latest version of CMCCv10.
