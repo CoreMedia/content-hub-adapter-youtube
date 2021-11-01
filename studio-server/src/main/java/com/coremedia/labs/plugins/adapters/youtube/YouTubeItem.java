@@ -131,6 +131,17 @@ class YouTubeItem extends YouTubeHubObject implements Item {
     return new UrlBlobBuilder(this, classifier).withUrl(defaultThumbnailUrl.get()).build();
   }
 
+  @Nullable
+  @Override
+  public ContentHubBlob getThumbnailBlob() {
+    Optional<String> defaultThumbnailUrl = getDefaultThumbnailUrl();
+    if (defaultThumbnailUrl.isEmpty()) {
+      return null;
+    }
+
+    return new UrlBlobBuilder(this, ContentHubBlob.THUMBNAIL_BLOB_CLASSIFIER).withUrl(defaultThumbnailUrl.get()).build();
+  }
+
   @NonNull
   private Optional<String> getDefaultThumbnailUrl() {
     ThumbnailDetails thumbnails = getThumbnails();
