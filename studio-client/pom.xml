@@ -11,8 +11,8 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <jangaroo.version>4.0.76</jangaroo.version>
-    <studio-client.version>2110.1</studio-client.version>
+    <jangaroo.version>4.1.9</jangaroo.version>
+    <cm.studio-client.core.version>2107.3</cm.studio-client.core.version>
     <!-- mvn jangaroo:run configuration: -->
     <!-- Proxy everything to a running Studio (except the locally developed package) -->
     <jooProxyPathSpec>/*</jooProxyPathSpec>
@@ -47,14 +47,14 @@
       <dependency>
         <groupId>com.coremedia.cms</groupId>
         <artifactId>studio-client-core-bom</artifactId>
-        <version>${studio-client.version}</version>
+        <version>${cm.studio-client.core.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
       <dependency>
         <groupId>com.coremedia.cms</groupId>
         <artifactId>studio-client-thirdparty-bom</artifactId>
-        <version>${studio-client.version}</version>
+        <version>${cm.studio-client.core.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
