@@ -2,7 +2,7 @@ import CoreIcons_properties from "@coremedia/studio-client.core-icons/CoreIcons_
 
 /**
  * Interface values for ResourceBundle "ContentHubYoutube".
- * @see ContentHubYoutube_properties#INSTANCE
+ * @see ContentHubYoutube_properties
  */
 interface ContentHubYoutube_properties {
 
@@ -51,7 +51,7 @@ const ContentHubYoutube_properties: ContentHubYoutube_properties = {
   YouTubeErrorCode_USAGE_LIMIT_EXCEEDED_title: "The daily limit was exceeded",
   YouTubeErrorCode_USAGE_LIMIT_EXCEEDED: "Response from Youtube: '{1}'",
   YouTubeErrorCode_QUOTA_POINTS_EXCEEDED_title: "Quota Exceeded",
-  YouTubeErrorCode_QUOTA_POINTS_EXCEEDED: "The request cannot be completed because you have exceeded your quota within your Google account."
+  YouTubeErrorCode_QUOTA_POINTS_EXCEEDED: "The request cannot be completed because you have exceeded your quota within your Google account.",
 };
 
 export default ContentHubYoutube_properties;
