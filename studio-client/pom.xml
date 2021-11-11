@@ -13,6 +13,7 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <jangaroo.version>4.1.9</jangaroo.version>
     <cm.studio-client.core.version>2107.3</cm.studio-client.core.version>
+    <jangaroo.studio-client.core.version>${cm.studio-client.core.version}-${jangaroo.version}</jangaroo.studio-client.core.version>
     <!-- mvn jangaroo:run configuration: -->
     <!-- Proxy everything to a running Studio (except the locally developed package) -->
     <jooProxyPathSpec>/*</jooProxyPathSpec>
@@ -99,6 +100,29 @@
           <jooJettyPort>${jooJettyPort}</jooJettyPort>
           <jooProxyPathSpec>${jooProxyPathSpec}</jooProxyPathSpec>
           <jooProxyTargetUri>${jooProxyTargetUri}</jooProxyTargetUri>
+          <extNamespace>com.coremedia.labs.plugins.adapters.youtube</extNamespace>
+          <npmPackageNameReplacers>
+            <npmPackageNameReplacer>
+              <search>^com[.]coremedia[.]labs[.]plugins__studio-client[.]content-hub-adapter-youtube</search>
+              <replace>@coremedia-labs/studio-client.main.content-hub-adapter-youtube</replace>
+            </npmPackageNameReplacer>
+          </npmPackageNameReplacers>
+          <npmPackageFolderNameReplacers>
+            <npmPackageFolderNameReplacer>
+              <search>^@coremedia-labs/studio-client[.]main[.]content-hub-adapter-youtube$</search>
+              <replace>apps/main/content-hub-adapter-youtube</replace>
+            </npmPackageFolderNameReplacer>
+          </npmPackageFolderNameReplacers>
+          <npmDependencyOverrides>
+            <npmDependencyOverride>
+              <search>^(@jangaroo/.*):.*$</search>
+              <replace>$1:^1.0.0-alpha</replace>
+            </npmDependencyOverride>
+            <npmDependencyOverride>
+              <search>^(@coremedia/studio-client[.].*):.*$</search>
+              <replace>$1:^${jangaroo.studio-client.core.version}</replace>
+            </npmDependencyOverride>
+          </npmDependencyOverrides>
         </configuration>
         <executions>
           <execution>
