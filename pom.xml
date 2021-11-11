@@ -9,7 +9,6 @@
   <packaging>pom</packaging>
 
   <modules>
-    <module>studio-client</module>
     <module>studio-server</module>
   </modules>
 
