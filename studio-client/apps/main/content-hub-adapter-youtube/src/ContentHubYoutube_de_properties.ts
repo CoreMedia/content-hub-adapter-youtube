@@ -6,7 +6,7 @@ import ContentHubYoutube_properties from "./ContentHubYoutube_properties";
  * @see ContentHubYoutube_properties
  */
 ResourceBundleUtil.override(ContentHubYoutube_properties, {
-  metadata_previewName: "Metadaten",
+  metadata_sectionName: "Metadaten",
   text_sectionItemKey: "Beschreibung",
   lastModified_sectionItemKey: "Zuletzt bearbeitet",
   videoId_sectionItemKey: "ID",
