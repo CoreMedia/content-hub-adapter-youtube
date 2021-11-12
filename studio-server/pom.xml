@@ -105,7 +105,7 @@
     </dependency>
 
     <dependency>
-      <groupId>com.coremedia.content-hub</groupId>
+      <groupId>com.coremedia.cms</groupId>
       <artifactId>content-hub-api</artifactId>
       <scope>provided</scope>
     </dependency>
