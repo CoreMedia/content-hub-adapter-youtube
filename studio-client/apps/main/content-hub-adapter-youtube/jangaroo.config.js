@@ -6,7 +6,7 @@ module.exports = {
   sencha: {
     studioPlugins: [
       {
-        mainClass: "com.coremedia.labs.plugins.adapters.youtube.ContentHubStudioyoutubePlugin",
+        mainClass: "com.coremedia.labs.plugins.adapters.youtube.ContentHubStudioYoutubePlugin",
         name: "Content Hub",
       },
     ],
