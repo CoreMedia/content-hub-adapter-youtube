@@ -116,7 +116,7 @@ class YouTubeItem extends YouTubeHubObject implements Item {
                     new DetailsElement<>("text", formatPreviewString(description)),
                     new DetailsElement<>("lastModified", formatPreviewDate(lastModified)),
                     new DetailsElement<>("videoId", videoId),
-                    new DetailsElement<>("link", getVideoUrl())
+                    new DetailsElement<>("link", "<a target='_blank' href='"+getVideoUrl()+"'>"+getVideoUrl()+"+</a>", true)
             ).stream().filter(p -> Objects.nonNull(p.getValue())).collect(Collectors.toUnmodifiableList())));
   }
 
