@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.util.Collections;
 
 class PlayListById {
   private static final Logger LOG = LoggerFactory.getLogger(PlayListById.class);
@@ -27,8 +28,8 @@ class PlayListById {
   private Playlist fetchPlayListById() throws IOException {
     LOG.debug("YouTube.Playlist id: {}", id);
     PlaylistListResponse playlistListResponse = youTube.playlists()
-            .list(SNIPPET)
-            .setId(id)
+            .list(Collections.singletonList(SNIPPET))
+            .setId(Collections.singletonList(id))
             .execute();
 
     return playlistListResponse.getItems().stream()

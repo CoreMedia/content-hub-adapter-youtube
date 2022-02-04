@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,9 +33,9 @@ class VideoServiceImpl implements VideoService {
     VideoListResponse videoListResponse;
     try {
       videoListResponse = youTube.videos()
-              .list(REQUEST_TYPE_SNIPPET)
+              .list(Collections.singletonList(REQUEST_TYPE_SNIPPET))
               .setMaxResults(1L)
-              .setId(videoId)
+              .setId(Collections.singletonList(videoId))
               .execute();
     } catch (GoogleJsonResponseException ge) {
       throw processGoogleJsonResponseException("Cannot fetch video by id " + videoId, ge);
