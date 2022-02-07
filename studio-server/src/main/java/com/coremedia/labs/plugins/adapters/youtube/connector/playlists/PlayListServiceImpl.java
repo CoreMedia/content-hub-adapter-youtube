@@ -12,6 +12,7 @@ import edu.umd.cs.findbugs.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,7 +34,7 @@ class PlayListServiceImpl implements PlayListService {
     try {
       LOG.debug("YouTube.PlaylistItems id: {}{}", playlistId, (pageCursor == null ? "" : " (paging)"));
       YouTube.PlaylistItems.List list = youTube.playlistItems()
-              .list(REQUEST_TYPE_SNIPPET)
+              .list(Collections.singletonList(REQUEST_TYPE_SNIPPET))
               .setMaxResults(YouTubeConstants.LOW_COST_REQUEST_PAGE_SIZE)
               .setPlaylistId(playlistId);
 
@@ -58,8 +59,8 @@ class PlayListServiceImpl implements PlayListService {
     try {
       LOG.debug("YouTube.Playlist id: {}", playlistId);
       PlaylistListResponse playlistListResponse = youTube.playlists()
-              .list(REQUEST_TYPE_SNIPPET)
-              .setId(playlistId)
+              .list(Collections.singletonList(REQUEST_TYPE_SNIPPET))
+              .setId(Collections.singletonList(playlistId))
               .execute();
 
       return playlistListResponse.getItems().stream().findAny();
@@ -77,7 +78,7 @@ class PlayListServiceImpl implements PlayListService {
     try {
       LOG.debug("YouTube.Playlists channel: {}{}", channelId, (pageCursor == null ? "" : " (paging)"));
       YouTube.Playlists.List list = youTube.playlists()
-              .list(REQUEST_TYPE_SNIPPET)
+              .list(Collections.singletonList(REQUEST_TYPE_SNIPPET))
               .setMaxResults(YouTubeConstants.LOW_COST_REQUEST_PAGE_SIZE)
               .setChannelId(channelId);
 

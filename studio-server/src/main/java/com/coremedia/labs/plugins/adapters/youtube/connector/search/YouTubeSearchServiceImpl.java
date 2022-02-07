@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 class YouTubeSearchServiceImpl implements YouTubeSearchService {
@@ -75,10 +76,10 @@ class YouTubeSearchServiceImpl implements YouTubeSearchService {
                                           List<SearchResult> searchResults, String token) throws IOException {
     LOG.debug("YouTube.search channel: {}, term: {}, order: {}, limit: {}{}", channelId, term, order, limit, (token==null ? "" : " (paging)"));
     YouTube.Search.List list = youTube.search()
-            .list(YOUTUBE_LIST_PART_SNIPPET)
+            .list(Collections.singletonList(YOUTUBE_LIST_PART_SNIPPET))
             .setMaxResults(YouTubeConstants.HIGH_COST_REQUEST_PAGE_SIZE)
             .setChannelId(channelId)
-            .setType(YOUTUBE_TYPE_VIDEO);
+            .setType(Collections.singletonList(YOUTUBE_TYPE_VIDEO));
     if (term != null) {
       list.setQ(term);
     }
@@ -108,10 +109,10 @@ class YouTubeSearchServiceImpl implements YouTubeSearchService {
                                                   String token) throws IOException {
     LOG.debug("YouTube.search channel: {}, term: {},{}", channelId, term, (token==null ? "" : " (paging)"));
     YouTube.Search.List list = youTube.search()
-                                      .list(YOUTUBE_LIST_PART_SNIPPET)
+                                      .list(Collections.singletonList(YOUTUBE_LIST_PART_SNIPPET))
                                       .setMaxResults(YouTubeConstants.HIGH_COST_REQUEST_PAGE_SIZE)
                                       .setChannelId(channelId)
-                                      .setType(YOUTUBE_TYPE_VIDEO);
+                                      .setType(Collections.singletonList(YOUTUBE_TYPE_VIDEO));
     if (term != null) {
       list.setQ(term);
     }
