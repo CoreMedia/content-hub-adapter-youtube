@@ -10,7 +10,7 @@ import com.coremedia.labs.plugins.adapters.youtube.connector.videos.VideoService
 import com.coremedia.contenthub.api.exception.ContentHubException;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.http.javanet.NetHttpTransport;
-import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.client.json.gson.GsonFactory;
 import com.google.api.services.youtube.YouTube;
 import com.google.common.collect.Lists;
 import edu.umd.cs.findbugs.annotations.NonNull;
@@ -57,7 +57,7 @@ class YouTubeConnectorFactoryImpl implements YouTubeConnectorFactory {
     if (credential.createScopedRequired()) {
       credential = credential.createScoped(scopes);
     }
-    YouTube youTube = new YouTube.Builder(new NetHttpTransport(), new JacksonFactory(), credential).setApplicationName("youtubeProvider").build();
+    YouTube youTube = new YouTube.Builder(new NetHttpTransport(), new GsonFactory(), credential).setApplicationName("youtubeProvider").build();
 
     YouTubeSearchService searchService = youTubeSearchServiceProvider.getSearchService(youTube);
     PlayListService playListService = playListServiceProvider.getPlayListService(youTube);
