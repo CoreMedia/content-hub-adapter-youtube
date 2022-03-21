@@ -181,7 +181,7 @@
       <plugin>
         <groupId>com.coremedia.maven</groupId>
         <artifactId>coremedia-plugins-maven-plugin</artifactId>
-        <version>1.0.0</version>
+        <version>1.0.1</version>
         <extensions>true</extensions>
         <configuration>
           <pluginId>${project.artifactId}</pluginId>
