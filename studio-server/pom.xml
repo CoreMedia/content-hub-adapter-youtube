@@ -65,7 +65,7 @@
     <dependency>
       <groupId>com.google.apis</groupId>
       <artifactId>google-api-services-youtube</artifactId>
-      <version>v3-rev20210915-1.32.1</version>
+      <version>v3-rev20220612-1.32.1</version>
       <exclusions>
         <exclusion>
           <groupId>com.google.guava</groupId>
@@ -76,7 +76,7 @@
     <dependency>
       <groupId>com.google.api-client</groupId>
       <artifactId>google-api-client</artifactId>
-      <version>1.33.1</version>
+      <version>1.35.1</version>
       <exclusions>
         <exclusion>
           <groupId>com.google.guava</groupId>
@@ -87,17 +87,17 @@
     <dependency>
       <groupId>com.google.http-client</groupId>
       <artifactId>google-http-client</artifactId>
-      <version>1.41.2</version>
+      <version>1.42.0</version>
     </dependency>
     <dependency>
       <groupId>com.google.http-client</groupId>
       <artifactId>google-http-client-gson</artifactId>
-      <version>1.41.1</version>
+      <version>1.42.0</version>
     </dependency>
     <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
-      <version>31.0.1-jre</version>
+      <version>31.1-jre</version>
     </dependency>
     <dependency>
       <groupId>org.apache.commons</groupId>
