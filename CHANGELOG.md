@@ -1,6 +1,18 @@
 Changelog
 ================================================================================
 
+2.0.3
+--------------------------------------------------------------------------------
+
+### Update third-party dependencies
+
+The following third-party Java libraries have been updated:
+
+* Google API Services YouTube v3-rev20220612-1.32.1
+* Google API Client 1.35.1
+* Google HTTP Client 1.42.0
+* Guava 31.1-jre
+
 2.0.2
 --------------------------------------------------------------------------------
 
@@ -11,7 +23,7 @@ Changelog
 
 ### Update to latest CMS versions
 
-### Update thirdparty dependencies
+### Update third-party dependencies
 
 ### Replace assembly-plugin with coremedia-plugins-maven-plugin
 
