@@ -26,6 +26,18 @@
           <artifactId>license-maven-plugin</artifactId>
           <version>2.0.0</version>
           <configuration>
+            <licenseUrlReplacements>
+              <licenseUrlReplacement>
+                <id>github.com</id>
+                <regexp>^https?://github\.com/([^/]+)/([^/]+)/blob/(.*)$</regexp>
+                <replacement>https://raw.githubusercontent.com/$1/$2/$3</replacement>
+              </licenseUrlReplacement>
+              <licenseUrlReplacement>
+                <id>slf4j</id>
+                <regexp>http://www.opensource.org/licenses/mit-license.php</regexp>
+                <replacement>https://raw.githubusercontent.com/qos-ch/slf4j/master/LICENSE.txt</replacement>
+              </licenseUrlReplacement>
+            </licenseUrlReplacements>
             <cleanLicensesOutputDirectory>true</cleanLicensesOutputDirectory>
             <errorRemedy>ignore</errorRemedy>
             <excludedGroups>^com\.coremedia\.</excludedGroups>
