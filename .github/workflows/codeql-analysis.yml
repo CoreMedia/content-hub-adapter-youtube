@@ -68,6 +68,31 @@ jobs:
         path: ~/.m2
         key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
         restore-keys: ${{ runner.os }}-m2
+    - if: martix.language == 'javascript'
+      name: Setup NodeJS
+      uses: actions/setup-node@v2
+      with:
+        node-version: 16.x
+    - if: martix.language == 'javascript'
+      name: Setup PNPM
+      run: |
+        NPM_AUTH_TOKEN=$(curl -s -H "Accept: application/json" -H "Content-Type:application/json" -X PUT --data '{"name": "${{ secrets.CM_NPM_USER }}", "password": "${{ secrets.CM_NPM_READ_ONLY_PASSWORD }}"}' https://npm.coremedia.io/-/user/org.couchdb.user:${{ secrets.CM_NPM_USER }} | jq -r .token)
+        echo "::add-mask::$NPM_AUTH_TOKEN"
+        echo "NPM_CONFIG_//npm.coremedia.io/:_authToken=$NPM_AUTH_TOKEN" >> $GITHUB_ENV
+        npm install -g pnpm@latest
+    - if: martix.language == 'javascript'
+      name: Install PNPM Dependencies
+      working-directory: studio-client
+      env:
+        NPM_CONFIG_@coremedia:registry: 'https://npm.coremedia.io'
+        NPM_CONFIG_@jangaroo:registry: 'https://npm.coremedia.io'
+      run: pnpm install
+    - if: martix.language == 'javascript'
+      name: Build with Pnpm
+      working-directory: studio-client
+      run: |
+        pnpm -r build 
+        pnpm -r package
     - if: matrix.language == 'java'
       name: Build with Maven
       env:
