@@ -1,5 +1,5 @@
 {
-  "$schema": "https://releases.coremedia.com/plugins/plugin-schema-2.0.0.json",
+  "$schema": "https://releases.coremedia.com/plugins/plugin-schema-3.0.0.json",
   "plugins": {
     "studio-server": {
       "file": "studio-server/target/studio-server.content-hub-adapter-youtube-${VERSION}.zip"
@@ -7,5 +7,6 @@
     "studio-client.main": {
       "file": "studio-client/apps/main/content-hub-adapter-youtube/build/studio-client.main.content-hub-adapter-youtube-${VERSION}.zip"
     }
-  }
+  },
+  "minimum-cms-version": "2110.1"
 }
