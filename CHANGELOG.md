@@ -1,5 +1,19 @@
 Changelog
 ================================================================================
+2.0.4
+--------------------------------------------------------------------------------
+
+### Update third-party dependencies
+
+The following packaged third-party Java libraries have been updated:
+
+* Google API Services YouTube v3-rev20220612-1.32.1
+* Google API Client 1.35.1
+* Google HTTP Client 1.42.0
+* Guava 32.1.3-jre
+* Apache Commons Lang 3.13.0
+
+### Update third-party dev dependencies and GitHub Action
 
 2.0.3
 --------------------------------------------------------------------------------
