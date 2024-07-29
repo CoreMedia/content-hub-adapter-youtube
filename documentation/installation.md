@@ -43,9 +43,14 @@ The deployment of plugins is described [here](https://documentation.coremedia.co
 
 In short, for a quick development roundtrip:
 1. Build your Blueprint.
-2. Build the `content-hub-adapter-youtube` plugin with `mvn clean install`.
-   Checkpoint: There should be zip files in the target directories of the `studio-client` and `studio-server` modules now.
-3. Create a directory for studio-server plugins, e.g. `/tmp/studio-server-plugins`,
+2. Build the `content-hub-adapter-youtube`
+   1. Run `mvn clean install` in the `studio-server` folder.
+
+      Checkpoint: A zip file exists in `studio-server/target`. 
+   2. Run `pnpm install && pnpm -r run build && pnpm -r run package` in the folder `studio-client`.
+  
+      Checkpoint: A zip file exists in `studio-client/apps/main/content-hub-adapter-youtube/build`.
+   3. Create a directory for studio-server plugins, e.g. `/tmp/studio-server-plugins`,
    and copy `content-hub-adapter-youtube/studio-server/target/studio-server.content-hub-adapter-youtube-<version>.zip`
    into that directory.
 4. Start the studio server as usual, e.g. `mvn spring-boot:run`, with an additional property `-Dplugins.directory=/tmp/studio-server-plugins`
