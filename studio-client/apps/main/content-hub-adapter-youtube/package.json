@@ -11,7 +11,7 @@
     "@jangaroo/runtime": "^1.5.0"
   },
   "devDependencies": {
-    "@jangaroo/build": "^3.0.0",
+    "@jangaroo/build": "^3.0.2",
     "@jangaroo/core": "^3.0.0",
     "@jangaroo/publish": "^3.0.0",
     "@jangaroo/run": "^3.0.0",
