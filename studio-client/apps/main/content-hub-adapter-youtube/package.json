@@ -12,9 +12,9 @@
   },
   "devDependencies": {
     "@jangaroo/build": "^3.0.2",
-    "@jangaroo/core": "^3.0.0",
-    "@jangaroo/publish": "^3.0.0",
-    "@jangaroo/run": "^3.0.0",
+    "@jangaroo/core": "^3.0.2",
+    "@jangaroo/publish": "^3.0.2",
+    "@jangaroo/run": "^3.0.2",
     "eslint": "^8.56.0",
     "rimraf": "^5.0.5"
   },
