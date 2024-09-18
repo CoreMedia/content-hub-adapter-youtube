@@ -102,7 +102,9 @@ jobs:
           if [ -n "$(git status --porcelain documentation)" ]; then
             git add documentation
             git commit -m "update license information"
-            git push
+            branch_name=${{ github.head_ref }}
+            git pull origin $branch_name --rebase
+            git push origin HEAD:$branch_name
           fi
 
       - name: Create Bundle
