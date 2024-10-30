@@ -1,4 +1,19 @@
 name: createSBOM.yml
+
 on:
+  release:
+    types: [created]
 
 jobs:
+  create-sbom:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Generate SBOM with Syft
+        uses: anchore/sbom-action@v0
+        with:
+          path: .
+          config: ".syft/config.yml"
