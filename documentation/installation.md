@@ -47,13 +47,13 @@ In short, for a quick development roundtrip:
    1. Run `mvn clean install` in the `studio-server` folder.
 
       Checkpoint: A zip file exists in `studio-server/target`. 
-   2. Run `pnpm install && pnpm -r run build && pnpm -r run package` in the folder `studio-client`.
+   2. Run `npm install -g pnpm@8.6 && pnpm install && pnpm -r run build && pnpm -r run package` in the folder `studio-client`.
   
       Checkpoint: A zip file exists in `studio-client/apps/main/content-hub-adapter-youtube/build`.
    3. Create a directory for studio-server plugins, e.g. `/tmp/studio-server-plugins`,
    and copy `content-hub-adapter-youtube/studio-server/target/studio-server.content-hub-adapter-youtube-<version>.zip`
    into that directory.
-4. Start the studio server as usual, e.g. `mvn spring-boot:run`, with an additional property `-Dplugins.directory=/tmp/studio-server-plugins`
+4. Start the studio server as usual, e.g. `mvn spring-boot:run`, with an additional property `-Dplugins.directories=/tmp/studio-server-plugins`
 5. Start the studio client with an additional property `-DadditionalPackagesDirs=/.../content-hub-adapter-youtube/studio-client/target/app`
 
 Now the plugin is running.  You won't yet notice it though, until you configure a connection
