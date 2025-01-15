@@ -50,11 +50,23 @@ In short, for a quick development roundtrip:
    2. Run `npm install -g pnpm@8.6 && pnpm install && pnpm -r run build && pnpm -r run package` in the folder `studio-client`.
   
       Checkpoint: A zip file exists in `studio-client/apps/main/content-hub-adapter-youtube/build`.
-   3. Create a directory for studio-server plugins, e.g. `/tmp/studio-server-plugins`,
+3. Create a directory for studio-server plugins, e.g. `/tmp/studio-server-plugins`,
    and copy `content-hub-adapter-youtube/studio-server/target/studio-server.content-hub-adapter-youtube-<version>.zip`
    into that directory.
 4. Start the studio server as usual, e.g. `mvn spring-boot:run`, with an additional property `-Dplugins.directories=/tmp/studio-server-plugins`
-5. Start the studio client with an additional property `-DadditionalPackagesDirs=/.../content-hub-adapter-youtube/studio-client/target/app`
+5. In your Blueprint studio-client workspace, there is a file `apps/studio-client/apps/main/app/jangaroo.config.js`,
+   which contains a structure like
+   ```
+   module.exports = jangarooConfig({
+     additionalPackagesDirs: [
+       "./build/additional-packages",
+     ],
+     ...
+   });
+   ```
+   Add the absolute path of the `content-hub-adapter-youtube/studio-client/apps/main/content-hub-adapter-youtube` directory
+   (see step 2.2.) to the `additionalPackagesDirs` list.
+6. Start the studio client as usual.
 
 Now the plugin is running.  You won't yet notice it though, until you configure a connection
 and restart the studio server.
