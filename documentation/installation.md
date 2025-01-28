@@ -19,6 +19,7 @@
 
 Depending on your setup and your plans, you can integrate this project in different ways.
 
+* If the plugin is already bundled in your Blueprint version (check the `plugins.json` file of the `studio-server` app), you can immediately proceed with [Configure the Plugin](#configure-the-plugin).
 * If you want to use the plugin in your project, clone or fork the repository.
 * If you do not want to use GitHub, proceed as described in [Download Release](#download-release).
 * If you want to contribute a new feature or a bugfix, as an external developer, you need a fork of the repository to create a Pull Request.
