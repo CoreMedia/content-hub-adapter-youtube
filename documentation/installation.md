@@ -41,7 +41,7 @@ The ZIP file provides the Maven workspace of the plugin.
 ## Activate the Plugin
 
 The YouTube contenthub adapter is a plugin for studio-server and studio-client.
-The deployment of plugins is described in the [Blueprint Developer Manual](https://documentation.coremedia.com/cmcc-12/artifacts/2412.0/webhelp/coremedia-en/content/ApplicationPlugins.html).
+The deployment of plugins is described in the [Blueprint Developer Manual](https://documentation.coremedia.com/cmcc-12/current/webhelp/coremedia-en/content/ApplicationPlugins.html).
 
 In short, for a quick development roundtrip:
 1. Possibly delete the plugin from the bundled plugins (as described in the "Using Plugin Descriptors and Releases" section of the Blueprint Developer Manual).
