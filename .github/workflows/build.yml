@@ -11,45 +11,55 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
+
     permissions:
       contents: write
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Setup Git
-        run: |
-          git config --global user.name 'coremedia-ci'
-          git config --global user.email 'coremedia-ci@coremedia.com'
-      - name: Set up JDK 11
+
+      - name: Set up JDK
         uses: actions/setup-java@v4
         with:
-          java-version: '11'
+          java-version: '17'
           distribution: 'adopt'
           server-id: coremedia.external.releases
           server-username: PLUGINS_NEXUS_USER
           server-password: PLUGINS_NEXUS_PASSWORD
-          cache: 'maven'
-      - name: Setup PNPM
-        uses: pnpm/action-setup@v3
+
+      - name: Cache Maven Repo
+        uses: actions/cache@v4
         with:
-          version: 8
-      - name: Setup NodeJS
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+
+      - name: Set up NodeJS
         uses: actions/setup-node@v4
         with:
-          node-version: 18
-          cache: 'pnpm'
-          cache-dependency-path: "studio-client/pnpm-lock.yaml"
-      - name: Setup registry npm.coremedia.io
+          node-version: 22.x
+
+      - name: Set up PNPM
         run: |
           NPM_AUTH_TOKEN=$(curl -s -H "Accept: application/json" -H "Content-Type:application/json" -X PUT --data '{"name": "${{ secrets.CM_NPM_USER }}", "password": "${{ secrets.CM_NPM_READ_ONLY_PASSWORD }}"}' https://npm.coremedia.io/-/user/org.couchdb.user:${{ secrets.CM_NPM_USER }} | jq -r .token)
           echo "::add-mask::$NPM_AUTH_TOKEN"
-          pnpm config set //npm.coremedia.io/:_authToken=$NPM_AUTH_TOKEN
-          pnpm config set @coremedia:registry=https://npm.coremedia.io
-          pnpm config set @jangaroo:registry=https://npm.coremedia.io
+          echo "NPM_CONFIG_//npm.coremedia.io/:_authToken=$NPM_AUTH_TOKEN" >> $GITHUB_ENV
+          npm install -g pnpm@latest
+
+      - name: Setup Git
+        if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main'
+        run: |
+          git config --global user.name 'coremedia-ci'
+          git config --global user.email 'coremedia-ci@coremedia.com'
+
       - name: Install PNPM Dependencies
         working-directory: studio-client
+        env:
+          NPM_CONFIG_@coremedia:registry: 'https://npm.coremedia.io'
+          NPM_CONFIG_@jangaroo:registry: 'https://npm.coremedia.io'
         run: pnpm install
+
       - name: Set Release Version
         id: set-release-version
         if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main'
@@ -68,8 +78,8 @@ jobs:
           git commit -m "set release version: ${release_version}"
           release_tag="v${release_version}"
           git tag "${release_tag}"
-          echo "version=${release_version}" >> $GITHUB_OUTPUT
-          echo "tag=${release_tag}" >> $GITHUB_OUTPUT
+          echo "::set-output name=version::${release_version}"
+          echo "::set-output name=tag::${release_tag}"
 
       - name: Output Version
         id: output-version
@@ -78,7 +88,7 @@ jobs:
           PLUGINS_NEXUS_PASSWORD: ${{ secrets.PLUGINS_NEXUS_PASSWORD }}
         run: |
           version=$(mvn --batch-mode org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.version -q -DforceStdout)
-          echo "version=${version}" >> $GITHUB_OUTPUT
+          echo "::set-output name=version::${version}"
 
       - name: Build with Pnpm
         working-directory: studio-client
@@ -90,22 +100,22 @@ jobs:
         env:
           PLUGINS_NEXUS_USER: ${{ secrets.PLUGINS_NEXUS_USER }}
           PLUGINS_NEXUS_PASSWORD: ${{ secrets.PLUGINS_NEXUS_PASSWORD }}
-        run: mvn --batch-mode --update-snapshots install
+        run: mvn --batch-mode --update-snapshots verify
 
-      - name: Update license info
-        if: github.event_name == 'pull_request'
-        env:
-          PLUGINS_NEXUS_USER: ${{ secrets.PLUGINS_NEXUS_USER }}
-          PLUGINS_NEXUS_PASSWORD: ${{ secrets.PLUGINS_NEXUS_PASSWORD }}
-        run: |
-          mvn --batch-mode -Pdocs-third-party generate-resources
-          if [ -n "$(git status --porcelain documentation)" ]; then
-            git add documentation
-            git commit -m "update license information"
-            branch_name=${{ github.head_ref }}
-            git pull origin $branch_name --rebase
-            git push origin HEAD:$branch_name
-          fi
+#      - name: Update license info
+#        if: github.event_name == 'pull_request'
+#        env:
+#          PLUGINS_NEXUS_USER: ${{ secrets.PLUGINS_NEXUS_USER }}
+#          PLUGINS_NEXUS_PASSWORD: ${{ secrets.PLUGINS_NEXUS_PASSWORD }}
+#        run: |
+#          mvn --batch-mode -Pdocs-third-party generate-resources
+#          if [ -n "$(git status --porcelain documentation)" ]; then
+#            git add documentation
+#            git commit -m "update license information"
+#            branch_name=${{ github.head_ref }}
+#            git pull origin $branch_name --rebase
+#            git push origin HEAD:$branch_name
+#          fi
 
       - name: Create Bundle
         env:
@@ -149,7 +159,7 @@ jobs:
           git add .
           git commit -m "set next snapshot version"
           git push && git push --tags
-          echo "version=${snapshot_version}" >> $GITHUB_OUTPUT
+          echo "::set-output name=version::${snapshot_version}"
 
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v4
