@@ -38,7 +38,7 @@ jobs:
       - name: Set up NodeJS
         uses: actions/setup-node@v4
         with:
-          node-version: 20.x
+          node-version: 22.x
 
       - name: Set up PNPM
         run: |
@@ -102,20 +102,20 @@ jobs:
           PLUGINS_NEXUS_PASSWORD: ${{ secrets.PLUGINS_NEXUS_PASSWORD }}
         run: mvn --batch-mode --update-snapshots verify
 
-      - name: Update license info
-        if: github.event_name == 'pull_request'
-        env:
-          PLUGINS_NEXUS_USER: ${{ secrets.PLUGINS_NEXUS_USER }}
-          PLUGINS_NEXUS_PASSWORD: ${{ secrets.PLUGINS_NEXUS_PASSWORD }}
-        run: |
-          mvn --batch-mode -Pdocs-third-party generate-resources
-          if [ -n "$(git status --porcelain documentation)" ]; then
-            git add documentation
-            git commit -m "update license information"
-            branch_name=${{ github.head_ref }}
-            git pull origin $branch_name --rebase
-            git push origin HEAD:$branch_name
-          fi
+#      - name: Update license info
+#        if: github.event_name == 'pull_request'
+#        env:
+#          PLUGINS_NEXUS_USER: ${{ secrets.PLUGINS_NEXUS_USER }}
+#          PLUGINS_NEXUS_PASSWORD: ${{ secrets.PLUGINS_NEXUS_PASSWORD }}
+#        run: |
+#          mvn --batch-mode -Pdocs-third-party generate-resources
+#          if [ -n "$(git status --porcelain documentation)" ]; then
+#            git add documentation
+#            git commit -m "update license information"
+#            branch_name=${{ github.head_ref }}
+#            git pull origin $branch_name --rebase
+#            git push origin HEAD:$branch_name
+#          fi
 
       - name: Create Bundle
         env:
