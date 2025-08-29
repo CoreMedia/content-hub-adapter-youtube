@@ -8,5 +8,5 @@
       "file": "studio-client/apps/main/content-hub-adapter-youtube/build/studio-client.main.content-hub-adapter-youtube-${VERSION}.zip"
     }
   },
-  "minimum-cms-version": "2110.1"
+  "minimum-cms-version": "2506.0.0"
 }
