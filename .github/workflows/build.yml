@@ -27,8 +27,8 @@ jobs:
           java-version: '11'
           distribution: 'adopt'
           server-id: coremedia.external.releases
-          server-username: PLUGINS_NEXUS_USER
-          server-password: PLUGINS_NEXUS_PASSWORD
+          server-username: NEXUS_GITHUB_ACTIONS_PUBLIC_MAVEN_USER
+          server-password: NEXUS_GITHUB_ACTIONS_PUBLIC_MAVEN_TOKEN
           cache: 'maven'
       - name: Setup PNPM
         uses: pnpm/action-setup@v3
@@ -54,8 +54,8 @@ jobs:
         id: set-release-version
         if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main'
         env:
-          PLUGINS_NEXUS_USER: ${{ secrets.PLUGINS_NEXUS_USER }}
-          PLUGINS_NEXUS_PASSWORD: ${{ secrets.PLUGINS_NEXUS_PASSWORD }}
+          NEXUS_GITHUB_ACTIONS_PUBLIC_MAVEN_USER: ${{ secrets.NEXUS_GITHUB_ACTIONS_PUBLIC_MAVEN_USER }}
+          NEXUS_GITHUB_ACTIONS_PUBLIC_MAVEN_TOKEN: ${{ secrets.NEXUS_GITHUB_ACTIONS_PUBLIC_MAVEN_TOKEN }}
         run: |
           mvn --batch-mode org.codehaus.mojo:versions-maven-plugin:2.8.1:set -DremoveSnapshot -DartifactId='*'
           release_version=$(mvn --batch-mode org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.version -q -DforceStdout)
@@ -74,8 +74,8 @@ jobs:
       - name: Output Version
         id: output-version
         env:
-          PLUGINS_NEXUS_USER: ${{ secrets.PLUGINS_NEXUS_USER }}
-          PLUGINS_NEXUS_PASSWORD: ${{ secrets.PLUGINS_NEXUS_PASSWORD }}
+          NEXUS_GITHUB_ACTIONS_PUBLIC_MAVEN_USER: ${{ secrets.NEXUS_GITHUB_ACTIONS_PUBLIC_MAVEN_USER }}
+          NEXUS_GITHUB_ACTIONS_PUBLIC_MAVEN_TOKEN: ${{ secrets.NEXUS_GITHUB_ACTIONS_PUBLIC_MAVEN_TOKEN }}
         run: |
           version=$(mvn --batch-mode org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.version -q -DforceStdout)
           echo "version=${version}" >> $GITHUB_OUTPUT
@@ -88,15 +88,15 @@ jobs:
 
       - name: Build with Maven
         env:
-          PLUGINS_NEXUS_USER: ${{ secrets.PLUGINS_NEXUS_USER }}
-          PLUGINS_NEXUS_PASSWORD: ${{ secrets.PLUGINS_NEXUS_PASSWORD }}
+          NEXUS_GITHUB_ACTIONS_PUBLIC_MAVEN_USER: ${{ secrets.NEXUS_GITHUB_ACTIONS_PUBLIC_MAVEN_USER }}
+          NEXUS_GITHUB_ACTIONS_PUBLIC_MAVEN_TOKEN: ${{ secrets.NEXUS_GITHUB_ACTIONS_PUBLIC_MAVEN_TOKEN }}
         run: mvn --batch-mode --update-snapshots install
 
       - name: Update license info
         if: github.event_name == 'pull_request'
         env:
-          PLUGINS_NEXUS_USER: ${{ secrets.PLUGINS_NEXUS_USER }}
-          PLUGINS_NEXUS_PASSWORD: ${{ secrets.PLUGINS_NEXUS_PASSWORD }}
+          NEXUS_GITHUB_ACTIONS_PUBLIC_MAVEN_USER: ${{ secrets.NEXUS_GITHUB_ACTIONS_PUBLIC_MAVEN_USER }}
+          NEXUS_GITHUB_ACTIONS_PUBLIC_MAVEN_TOKEN: ${{ secrets.NEXUS_GITHUB_ACTIONS_PUBLIC_MAVEN_TOKEN }}
         run: |
           mvn --batch-mode -Pdocs-third-party generate-resources
           if [ -n "$(git status --porcelain documentation)" ]; then
@@ -136,8 +136,8 @@ jobs:
         id: set-snapshot-version
         if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main'
         env:
-          PLUGINS_NEXUS_USER: ${{ secrets.PLUGINS_NEXUS_USER }}
-          PLUGINS_NEXUS_PASSWORD: ${{ secrets.PLUGINS_NEXUS_PASSWORD }}
+          NEXUS_GITHUB_ACTIONS_PUBLIC_MAVEN_USER: ${{ secrets.NEXUS_GITHUB_ACTIONS_PUBLIC_MAVEN_USER }}
+          NEXUS_GITHUB_ACTIONS_PUBLIC_MAVEN_TOKEN: ${{ secrets.NEXUS_GITHUB_ACTIONS_PUBLIC_MAVEN_TOKEN }}
         run: |
           mvn --batch-mode org.codehaus.mojo:versions-maven-plugin:2.8.1:set -DnextSnapshot -DartifactId='*'
           snapshot_version=$(mvn --batch-mode org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.version -q -DforceStdout)
